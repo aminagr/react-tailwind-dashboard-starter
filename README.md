@@ -1,8 +1,31 @@
-# React + Vite
+# React Dashboard Template with Vite, Tailwind CSS & Laravel API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **React.js** dashboard template built with **Vite** for fast development, **Tailwind CSS** for styling, and integrated with a **Laravel** backend API for user authentication (signup and signin), statistical charts, and CRUD operations.
 
-Currently, two official plugins are available:
+This template is designed to be **responsive**, **customizable**, and **easy to extend**. It provides a simple layout structure for quickly building a dashboard application with all the necessary features.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+
+- **Fast development** with **Vite** as the bundler
+- Fully **responsive design** using **Tailwind CSS**
+- **Authentication system** (signup, signin) integrated with the Laravel API
+- **Charts** for displaying statistical data and analytics.
+- **Tables** for managing data with **CRUD functionality**
+- Easy to extend and customize based on your requirements
+
+## Prerequisites
+
+- **Node.js** and **npm** should be installed on your system
+- **Laravel Backend** with routes for:
+  - User authentication (signup, signin)
+  - CRUD operations for managing data
+  - API routes for statistical data (for charts)
+
+## Installation
+
+```bash
+git clone https://github.com/aminagr/react-tailwind-dashboard-template
+cd react-tailwind-dashboard-template
+npm install
+npm run dev
+``` 
