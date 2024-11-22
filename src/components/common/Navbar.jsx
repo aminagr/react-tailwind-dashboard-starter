@@ -9,7 +9,7 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   return (
-    <nav className="bg-gray-700 p-4 shadow-md flex justify-between items-center w-full">
+    <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 shadow-md flex justify-between items-center w-full">
       
       <button onClick={toggleSidebar} className="md:hidden text-white">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -18,13 +18,18 @@ const Navbar = ({ toggleSidebar }) => {
       </button>
 
       <div className="relative flex items-center w-full max-w-md mx-4 md:mx-8">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Rechercher..."
-          className="w-full py-2 px-4 pr-10 bg-gray-700 text-white rounded-full border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-        />
+    
+
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder="Rechercher..."
+        className="w-full py-2 px-4 pr-10 bg-gray-800 text-white rounded-full border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 transition-all"
+      />
+
+
+
         <FaSearch className="absolute right-3 h-5 w-5 text-white" />
       </div>
 
