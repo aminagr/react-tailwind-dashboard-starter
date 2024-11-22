@@ -13,6 +13,8 @@ This template is designed to be **responsive**, **customizable**, and **easy to 
 - **Tables** for managing data with **CRUD functionality**
 - Easy to extend and customize based on your requirements
 
+## Screenshots
+
 ## Prerequisites
 
 - **Node.js** and **npm** should be installed on your system
@@ -24,8 +26,15 @@ This template is designed to be **responsive**, **customizable**, and **easy to 
 ## Installation
 
 ```bash
-git clone https://github.com/aminagr/react-tailwind-dashboard-template
+git clone https://github.com/aminagr/react-tailwind-dashboard-template.git 
 cd react-tailwind-dashboard-template
 npm install
 npm run dev
 ``` 
+## Contributing
+
+Feel free to fork this repository, open issues, or submit pull requests. Contributions are always welcome!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
