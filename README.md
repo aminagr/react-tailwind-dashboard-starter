@@ -1,6 +1,6 @@
 # React Dashboard Template with Vite, Tailwind CSS & Laravel API
 
-A **React.js** dashboard template built with **Vite** for fast development, **Tailwind CSS** for styling, and integrated with a [**Laravel** backend API] (https://github.com/aminagr/laravel-dashboard-api) for user authentication (signup and signin), statistical charts, and CRUD operations.
+A **React.js** dashboard template built with **Vite** for fast development, **Tailwind CSS** for styling, and integrated with a [**Laravel** backend API](https://github.com/aminagr/laravel-dashboard-api) for user authentication (signup and signin), statistical charts, and CRUD operations.
 
 This template is designed to be **responsive**, **customizable**, and **easy to extend**. It provides a simple layout structure for quickly building a dashboard application with all the necessary features.
 
