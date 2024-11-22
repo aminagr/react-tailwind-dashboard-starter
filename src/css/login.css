@@ -1,0 +1,13 @@
+
+.auth-form input:-webkit-autofill,
+.login-form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px #4F46E5 inset !important; /* Indigo-600 */
+  background-color: #4F46E5 !important; /* Indigo-600 pour le fond */
+  -webkit-text-fill-color: white !important;
+}
+
+.auth-form input:-webkit-autofill:focus,
+.login-form input:-webkit-autofill:focus {
+  background-color: #9333EA !important; 
+  -webkit-text-fill-color: white !important;
+}
