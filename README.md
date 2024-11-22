@@ -14,6 +14,11 @@ This template is designed to be **responsive**, **customizable**, and **easy to 
 - Easy to extend and customize based on your requirements
 
 ## Screenshots
+ ![image](https://github.com/user-attachments/assets/f41f2f60-8957-45b1-b29e-95f528ef9099)
+ ![image](https://github.com/user-attachments/assets/481f175a-cd1e-4d72-b9ab-8b1b26a66df4)
+ ![image](https://github.com/user-attachments/assets/152d44db-fff2-4549-9244-8c1e5ffac876)
+ ![image](https://github.com/user-attachments/assets/ab8dbfc8-19b7-4b83-8f6f-47180933855e)
+
 
 ## Prerequisites
 
