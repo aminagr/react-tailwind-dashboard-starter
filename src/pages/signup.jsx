@@ -21,7 +21,7 @@ const SignupPage = () => {
               Connectez-vous pour accéder à votre compte.
             </p>
             <a
-              href="/"
+              href="/login"
               className="px-4 py-2 md:px-6 md:py-3 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-500 text-center"
             >
               Connectez-vous !

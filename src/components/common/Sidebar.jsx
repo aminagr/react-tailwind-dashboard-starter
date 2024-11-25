@@ -36,7 +36,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       if (response.ok) {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("isLoggedIn"); 
-        window.location.href = "/";
+        window.location.href = "/login";
       } else {
         alert(data.message || "Erreur lors de la déconnexion");
       }
