@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import LoginPage from './pages/login';  // Assure-toi que ce composant existe
+import LoginPage from './pages/login';  
 import SignupPage from './pages/signup';
 import ForgotPasswordForm from './components/ForgotPasswordForm';
 import ResetPassword from './pages/resetpassword';
@@ -15,7 +15,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<RedirectHome />} />
-        <Route path="/login" element={<LoginPage />} /> {/* Ajoute la route /login */}
+        <Route path="/login" element={<LoginPage />} /> 
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
@@ -44,7 +44,7 @@ const RedirectHome = () => {
     if (isLoggedIn) {
       navigate('/dashboard');
     } else {
-      navigate('/login');  // Assure-toi que cette redirection mène bien à la page de login
+      navigate('/login');  
     }
   }, [navigate]);
 

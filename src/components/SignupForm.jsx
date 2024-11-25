@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { registerUser } from '../api/auth'; 
 import '../css/login.css';
+
 const SignupForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,39 +22,23 @@ const SignupForm = () => {
     }
   
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          password: password,
-          password_confirmation: passwordConfirmation,
-        }),
+      const response = await registerUser({
+        name,
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
       });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
+
+      if (response.success) {
         alert("Utilisateur inscrit avec succès!");
-    
         navigate('/'); 
       } else {
-   
-        if (data.message.includes('email')) {
-          setError("L'email est déjà utilisé.");
-        } else {
-          setError(data.message || "Erreur d'inscription");
-        }
+        setError(response.message || "Erreur d'inscription");
       }
     } catch (error) {
-      console.error("Erreur d'inscription :", error);
       setError("Une erreur est survenue. Veuillez réessayer.");
     }
   };
-  
 
   return (
     <div className="w-full md:w-3/4">

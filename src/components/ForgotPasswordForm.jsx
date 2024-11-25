@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaEnvelope } from "react-icons/fa"; 
+import { sendPasswordResetLink } from "../api/auth";  
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
@@ -15,17 +16,8 @@ const ForgotPasswordForm = () => {
     setMessage(""); 
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/sendResetLink", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
+      const data = await sendPasswordResetLink(email);  
+      if (data.success) {
         setMessage("Un lien de réinitialisation a été envoyé à votre email.");
       } else {
         setError(data.message || "Erreur d'envoi du lien de réinitialisation.");

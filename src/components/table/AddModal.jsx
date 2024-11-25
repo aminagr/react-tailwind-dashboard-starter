@@ -23,7 +23,7 @@ const AddModal = ({ data, onClose, onSave }) => {
     if (isNaN(price) || parseFloat(price) <= 0) {
       return 'Le prix doit être un nombre valide et supérieur à zéro.';
     }
-    return ''; // No errors
+    return ''; 
   };
 
   const handleSave = () => {
@@ -41,8 +41,8 @@ const AddModal = ({ data, onClose, onSave }) => {
       price, 
       date: new Date().toISOString().split('T')[0] 
     };
-    onSave(newItem); // Save the new product
-    setError(''); // Clear error
+    onSave(newItem);
+    setError(''); 
   };
 
   return (

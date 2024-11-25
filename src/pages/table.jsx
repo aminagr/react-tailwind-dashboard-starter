@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts, addProduct, updateProduct, deleteProduct } from '../api';  
+import { getProducts, addProduct, updateProduct, deleteProduct } from '../api/index';  
 import SearchBar from '../components/table/SearchBar';
 import SortOptions from '../components/table/SortOptions';
 import ProductTable from '../components/table/ProductTable';

@@ -14,7 +14,7 @@ const EditModal = ({ data, onClose, onSave }) => {
     if (isNaN(price) || parseFloat(price) <= 0) {
       return 'Le prix doit être un nombre valide et supérieur à zéro.';
     }
-    return ''; // No errors
+    return ''; 
   };
 
   const handleSave = () => {
@@ -26,7 +26,7 @@ const EditModal = ({ data, onClose, onSave }) => {
 
     const updatedItem = { ...data, productName, color, category, price };
     onSave(updatedItem);
-    setError(''); // Clear error
+    setError('');
   };
 
   return (

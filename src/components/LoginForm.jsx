@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
+import { loginUser } from '../api/auth';  // Import the loginUser function
 import '../css/login.css';
 
 const LoginForm = () => {
@@ -8,7 +9,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);  
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -16,21 +17,14 @@ const LoginForm = () => {
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          remember_me: rememberMe,
-        }),
+      // Use the loginUser function from the API
+      const data = await loginUser({
+        email,
+        password,
+        remember_me: rememberMe,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (data.token) {
         localStorage.setItem("auth_token", data.token);
         localStorage.setItem("isLoggedIn", "true");
         navigate("/dashboard");
@@ -48,7 +42,7 @@ const LoginForm = () => {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);  
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -80,10 +74,10 @@ const LoginForm = () => {
           />
           <button
             type="button"
-            onClick={togglePasswordVisibility}  
+            onClick={togglePasswordVisibility}
             className="absolute right-2 top-3 text-white"
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />} 
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
         <div className="flex items-center">

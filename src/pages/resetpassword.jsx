@@ -1,6 +1,7 @@
 // src/pages/ResetPassword.jsx
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { resetPassword } from "../api/auth";  
 
 const ResetPassword = () => {
   const { token } = useParams();  
@@ -19,21 +20,8 @@ const ResetPassword = () => {
     }
 
     try {
-
-      const response = await fetch("http://ton-backend-laravel/api/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token,
-          password: password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
+      const data = await resetPassword({ token, password });  
+      if (data.success) {
         setMessage("Votre mot de passe a été réinitialisé avec succès.");
       } else {
         setError(data.message || "Erreur de réinitialisation du mot de passe.");

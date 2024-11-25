@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaTachometerAlt, FaUser, FaCog, FaSignOutAlt, FaChartBar, FaTable } from 'react-icons/fa';
+import { logoutUser } from '../../api/auth'; 
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -13,39 +14,18 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     setShowConfirmation(false); 
   };
 
-
   const handleConfirmLogout = async () => {
     try {
-      const token = localStorage.getItem("auth_token");
-  
-      if (!token) {
-        alert("Aucun token trouvé, déconnexion échouée.");
-        return;
-      }
-  
-      const response = await fetch("http://127.0.0.1:8000/api/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        localStorage.removeItem("auth_token");
-        localStorage.removeItem("isLoggedIn"); 
-        window.location.href = "/login";
-      } else {
-        alert(data.message || "Erreur lors de la déconnexion");
-      }
+      const data = await logoutUser();
+      console.log(data.message || "Déconnexion réussie.");
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("isLoggedIn"); 
+      window.location.href = "/login"; 
     } catch (error) {
       console.error("Erreur de déconnexion:", error);
-      alert("Une erreur est survenue. Veuillez réessayer.");
+      alert("Une erreur est survenue lors de la déconnexion.");
     }
   };
-  
 
   return (
     <>
@@ -112,7 +92,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           </li>
         </ul>
       </div>
-
 
       {showConfirmation && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 z-30 flex justify-center items-center">
