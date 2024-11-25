@@ -23,15 +23,15 @@ const ProductTable = ({ data, onEdit, onDelete, setIsEditModalOpen }) => (
           <td className="px-4 py-2">
             <button
               onClick={() => {
-                onEdit(item);
-                setIsEditModalOpen(true);
+                onEdit(item); // Appel de la fonction onEdit avec l'élément actuel
+                setIsEditModalOpen(true); // Ouvrir le modal d'édition
               }}
               className="p-2 text-blue-500 hover:text-blue-700"
             >
               <FaEdit />
             </button>
             <button
-              onClick={() => onDelete(item.id)}
+              onClick={() => onDelete(item.id)} // Appel de la fonction onDelete avec l'ID de l'élément
               className="p-2 text-red-500 hover:text-red-700"
             >
               <FaTrash />

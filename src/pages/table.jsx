@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getProducts, addProduct, updateProduct, deleteProduct } from '../api';  
 import SearchBar from '../components/table/SearchBar';
 import SortOptions from '../components/table/SortOptions';
 import ProductTable from '../components/table/ProductTable';
@@ -8,33 +9,40 @@ import AddModal from '../components/table/AddModal';
 import { FaPlus } from 'react-icons/fa';
 
 const Table = () => {
-  const initialData = [
-    { id: 1, productName: 'Apple MacBook Pro 17"', color: 'Argent', category: 'Ordinateur portable', price: '2999$', date: '2023-05-01' },
-    { id: 2, productName: 'Microsoft Surface Pro', color: 'Blanc', category: 'PC portable', price: '1999$', date: '2023-06-15' },
-    { id: 3, productName: 'Magic Mouse 2', color: 'Noir', category: 'Accessoires', price: '99$', date: '2023-07-20' },
-  ];
-
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]); 
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const [editData, setEditData] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [newProduct, setNewProduct] = useState({
-    productName: '',
-    color: '',
-    category: '',
-    price: '',
-  });
+
+  useEffect(() => {
+
+    const fetchProducts = async () => {
+      try {
+        const products = await getProducts();
+      
+        setData(Array.isArray(products) ? products : []); 
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const rowsPerPage = 10;
-  const filteredData = data.filter((item) =>
-    Object.values(item)
-      .join(' ')
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
+
+
+  const filteredData = Array.isArray(data)
+    ? data.filter((item) =>
+        Object.values(item)
+          .join(' ')
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (sortOrder === 'nouveau') {
@@ -52,9 +60,38 @@ const Table = () => {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = sortedData.slice(indexOfFirstRow, indexOfLastRow);
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-      setData(data.filter((item) => item.id !== id));
+      try {
+        await deleteProduct(id);
+        setData(data.filter((item) => item.id !== id));
+      } catch (error) {
+        console.error('Failed to delete product:', error);
+      }
+    }
+  };
+
+  const handleAddProduct = async (newProduct) => {
+    try {
+      const addedProduct = await addProduct(newProduct);
+      setData((prevData) => [...prevData, addedProduct]);
+      setIsAddModalOpen(false);
+    } catch (error) {
+      console.error('Failed to add product:', error);
+    }
+  };
+
+  const handleUpdateProduct = async (updatedProduct) => {
+    try {
+      const updatedItem = await updateProduct(updatedProduct.id, updatedProduct);
+      setData((prevData) =>
+        prevData.map((item) =>
+          item.id === updatedItem.id ? updatedItem : item
+        )
+      );
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.error('Failed to update product:', error);
     }
   };
 
@@ -66,16 +103,20 @@ const Table = () => {
           <SortOptions value={sortOrder} onChange={setSortOrder} />
         </div>
         <button
-  onClick={() => setIsAddModalOpen(true)}
-  className="p-2 bg-gradient-to-r from-purple-400 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-700 flex items-center justify-center mt-2 md:mt-0 w-full md:w-auto"
->
-  <FaPlus className="inline mr-2" />
-  Ajouter un produit
-</button>
-
+          onClick={() => setIsAddModalOpen(true)}
+          className="p-2 bg-gradient-to-r from-purple-400 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-700 flex items-center justify-center mt-2 md:mt-0 w-full md:w-auto"
+        >
+          <FaPlus className="inline mr-2" />
+          Ajouter un produit
+        </button>
       </div>
 
-      <ProductTable data={currentRows} onEdit={setEditData} onDelete={handleDelete} setIsEditModalOpen={setIsEditModalOpen} />
+      <ProductTable
+        data={currentRows}
+        onEdit={setEditData}
+        onDelete={handleDelete}
+        setIsEditModalOpen={setIsEditModalOpen}
+      />
 
       <Pagination
         currentPage={currentPage}
@@ -87,21 +128,15 @@ const Table = () => {
         <EditModal
           data={editData}
           onClose={() => setIsEditModalOpen(false)}
-          onSave={(updatedItem) => {
-            setData(data.map((item) => (item.id === updatedItem.id ? updatedItem : item)));
-            setIsEditModalOpen(false);
-          }}
+          onSave={handleUpdateProduct}
         />
       )}
 
       {isAddModalOpen && (
         <AddModal
-          data={newProduct}
+          data={{ productName: '', color: '', category: '', price: '' }}
           onClose={() => setIsAddModalOpen(false)}
-          onSave={(newItem) => {
-            setData([...data, { ...newItem, id: data.length + 1, date: new Date().toISOString().split('T')[0] }]);
-            setIsAddModalOpen(false);
-          }}
+          onSave={handleAddProduct}
         />
       )}
     </div>

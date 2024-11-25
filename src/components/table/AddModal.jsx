@@ -1,14 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const AddModal = ({ data, onClose, onSave }) => {
-  const [productName, setProductName] = useState(data.productName);
-  const [color, setColor] = useState(data.color);
-  const [category, setCategory] = useState(data.category);
-  const [price, setPrice] = useState(data.price);
+  const [productName, setProductName] = useState('');
+  const [color, setColor] = useState('');
+  const [category, setCategory] = useState('');
+  const [price, setPrice] = useState('');
+
+  // Synchroniser les données avec les props initiales
+  useEffect(() => {
+    if (data) {
+      setProductName(data.productName || '');
+      setColor(data.color || '');
+      setCategory(data.category || '');
+      setPrice(data.price || '');
+    }
+  }, [data]);
 
   const handleSave = () => {
-    const newItem = { id: Date.now(), productName, color, category, price, date: new Date().toISOString().split('T')[0] };
-    onSave(newItem);
+    const newItem = { 
+      id: Date.now(), 
+      productName, 
+      color, 
+      category, 
+      price, 
+      date: new Date().toISOString().split('T')[0] 
+    };
+    onSave(newItem); // Sauvegarder le nouveau produit
   };
 
   return (
@@ -71,12 +88,11 @@ const AddModal = ({ data, onClose, onSave }) => {
             Annuler
           </button>
           <button
-  onClick={handleSave}
-  className="px-4 py-2 bg-gradient-to-r from-purple-400 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-700"
->
-  Ajouter
-</button>
-
+            onClick={handleSave}
+            className="px-4 py-2 bg-gradient-to-r from-purple-400 to-blue-600 text-white rounded-lg hover:from-purple-500 hover:to-blue-700"
+          >
+            Ajouter
+          </button>
         </div>
       </div>
     </div>
