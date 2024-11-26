@@ -65,3 +65,17 @@ export const logoutUser = async () => {
     throw error;
   }
 };
+
+export const fetchUserData = async (token) => {
+  try {
+    const response = await axios.get(`${apiUrl}/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données utilisateur:', error);
+    throw error;
+  }
+};

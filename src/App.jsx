@@ -9,7 +9,7 @@ import DashboardLayout from './components/layout/DashboardLayout';
 import Table from "./pages/table";
 import Profile from "./pages/profile";
 import Stats from "./pages/statistics";
-import Settings from "./pages/settings";
+
 import PrivateRoute from "./components/PrivateRoute";
 import './index.css';
 
