@@ -70,12 +70,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               <span className="text-lg">Statistiques</span>
             </Link>
           </li>
-          <li>
-            <Link to="/settings" className="flex items-center py-2 px-4 rounded-lg hover:bg-gray-700 transition-all">
-              <FaCog className="mr-3" />
-              <span className="text-lg">Paramètres</span>
-            </Link>
-          </li>
+     
         </ul>
 
         <div className="my-8 border-t border-gray-600"></div>

@@ -1,6 +1,6 @@
 const SortOptions = ({ value, onChange }) => (
     <select
-      className="p-2 border border-gray-300 rounded-lg"
+      className="p-2 border border-gray-300 rounded-lg  w-full"
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >

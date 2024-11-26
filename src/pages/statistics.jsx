@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'; 
-import { FaUsers, FaChartLine, FaCogs, FaShoppingCart, FaRegBell, FaDollarSign } from 'react-icons/fa';
-import { Line } from 'react-chartjs-2';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
+import React, { useEffect, useRef } from 'react';
+import { Line, Bar, Pie, Radar } from 'react-chartjs-2';
+import { FaUsers, FaDollarSign, FaClipboardList } from 'react-icons/fa';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, RadialLinearScale, BarElement, Filler } from 'chart.js';
 
 
 ChartJS.register(
@@ -10,16 +9,20 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  ArcElement, 
+  ArcElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  RadialLinearScale,
+  BarElement,
+  Filler
 );
 
-const Dashboard = () => {
+const Statistics = () => {
+
 
   const lineChartData = {
-    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
+    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
     datasets: [
       {
         label: 'Ventes Mensuelles',
@@ -31,17 +34,16 @@ const Dashboard = () => {
     ],
   };
 
-
-  const lineChartOptions = {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: 'Évolution des Ventes',
+  const barChartData = {
+    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+    datasets: [
+      {
+        label: 'Revenus Mensuels',
+        data: [4000, 5000, 7000, 9000, 10000, 12000],
+        backgroundColor: 'rgba(153, 102, 255, 0.6)',
       },
-    },
+    ],
   };
-
 
   const pieChartData = {
     labels: ['Utilisateurs Actifs', 'Utilisateurs Inactifs', 'Utilisateurs Suspendus'],
@@ -55,13 +57,63 @@ const Dashboard = () => {
     ],
   };
 
+  const radarChartData = {
+    labels: ['Performance A', 'Performance B', 'Performance C', 'Performance D'],
+    datasets: [
+      {
+        label: 'Évaluations',
+        data: [8, 6, 7, 5],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      },
+    ],
+  };
+
+  const lineChartOptions = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Évolution des Ventes',
+      },
+    },
+  };
+
+  const barChartOptions = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Revenus Mensuels',
+      },
+    },
+  };
+
+  const radarChartOptions = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Évaluation des Performances',
+      },
+    },
+  };
+
+
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, []);
+
   return (
     <div className="bg-gray-100 h-full p-6">
-    
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        
         <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
           <div className="bg-blue-500 text-white p-3 rounded-full">
             <FaUsers className="text-3xl" />
@@ -71,7 +123,6 @@ const Dashboard = () => {
             <p className="text-gray-600 mt-2">1 250</p>
           </div>
         </div>
-        
 
         <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
           <div className="bg-green-500 text-white p-3 rounded-full">
@@ -82,68 +133,42 @@ const Dashboard = () => {
             <p className="text-gray-600 mt-2">48 300 $</p>
           </div>
         </div>
-        
 
         <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
           <div className="bg-yellow-500 text-white p-3 rounded-full">
-            <FaShoppingCart className="text-3xl" />
+            <FaClipboardList className="text-3xl" />
           </div>
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">Revenus Ce Mois</h2>
-            <p className="text-gray-600 mt-2">12 500 $</p>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
-          <div className="bg-purple-500 text-white p-3 rounded-full">
-            <FaChartLine className="text-3xl" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800">Taux de Croissance</h2>
-            <p className="text-gray-600 mt-2">+15,8%</p>
-          </div>
-        </div>
-
-
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
-          <div className="bg-red-500 text-white p-3 rounded-full">
-            <FaRegBell className="text-3xl" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800">Notifications</h2>
-            <p className="text-gray-600 mt-2">3 nouvelles alertes</p>
-          </div>
-        </div>
-
-
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
-          <div className="bg-gray-500 text-white p-3 rounded-full">
-            <FaCogs className="text-3xl" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800">Paramètres Système</h2>
-            <p className="text-gray-600 mt-2">Gérez vos paramètres</p>
+            <h2 className="text-xl font-semibold text-gray-800">Commandes Totales</h2>
+            <p className="text-gray-600 mt-2">1 750</p>
           </div>
         </div>
       </div>
 
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mt-8">
-        
-  
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Ventes Mensuelles</h2>
           <Line data={lineChartData} options={lineChartOptions} />
         </div>
 
- 
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Revenus Mensuels</h2>
+          <Bar data={barChartData} options={barChartOptions} />
+        </div>
+
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Répartition des Utilisateurs</h2>
           <Pie data={pieChartData} />
         </div>
 
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Évaluation des Performances</h2>
+          <Radar data={radarChartData} options={radarChartOptions} />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Statistics;

@@ -7,6 +7,9 @@ import ResetPassword from './pages/resetpassword';
 import Dashboard from './pages/dashboard';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Table from "./pages/table";
+import Profile from "./pages/profile";
+import Stats from "./pages/statistics";
+import Settings from "./pages/settings";
 import PrivateRoute from "./components/PrivateRoute";
 import './index.css';
 
@@ -32,6 +35,24 @@ const App = () => {
             <PrivateRoute layout={DashboardLayout} element={<Table />} />
           }
         />
+
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute layout={DashboardLayout} element={<Profile />} />
+          }
+        />
+
+
+      <Route
+          path="/statistics"
+          element={
+            <PrivateRoute layout={DashboardLayout} element={<Stats />} />
+          }
+        />
+     
+
+
       </Routes>
     </Router>
   );
