@@ -18,7 +18,8 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} /> 
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
         <Route
           path="/dashboard"
           element={

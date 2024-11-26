@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
-import { loginUser } from '../api/auth';  // Import the loginUser function
+import { FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
+import { loginUser } from '../api/auth';  
 import '../css/login.css';
 
 const LoginForm = () => {
@@ -10,33 +10,46 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
-
+    setError(""); 
+    setLoading(true); 
+  
     try {
-      // Use the loginUser function from the API
       const data = await loginUser({
         email,
         password,
         remember_me: rememberMe,
       });
-
+  
+     
       if (data.token) {
         localStorage.setItem("auth_token", data.token);
         localStorage.setItem("isLoggedIn", "true");
         navigate("/dashboard");
       } else {
-        setError(data.message || "Erreur de connexion");
+      
+        setError(data.message || "Email ou mot de passe incorrect");
       }
     } catch (error) {
       console.error("Erreur de connexion :", error);
-      setError("Une erreur est survenue. Veuillez réessayer.");
+  
+    
+      if (error.response) {
+       
+        setError(error.response.data.message || "Une erreur est survenue. Veuillez réessayer.");
+      } else {
+    
+        setError("Une erreur est survenue. Veuillez réessayer.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
-
+  
   const handleForgotPassword = () => {
     navigate("/forgot-password");
   };
@@ -93,8 +106,15 @@ const LoginForm = () => {
           </label>
         </div>
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button className="w-full py-2 bg-white text-indigo-600 text-lg font-bold uppercase rounded-full hover:bg-gray-200">
-          Connexion
+        <button
+          className="w-full py-2 bg-white text-indigo-600 text-lg font-bold uppercase rounded-full hover:bg-gray-200"
+          disabled={loading} 
+        >
+          {loading ? (
+            <FaSpinner className="animate-spin mx-auto" /> 
+          ) : (
+            "Connexion"
+          )}
         </button>
       </form>
       <a

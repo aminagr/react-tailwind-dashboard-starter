@@ -1,28 +1,32 @@
-// src/components/ForgotPasswordForm.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaEnvelope } from "react-icons/fa"; 
-import { sendPasswordResetLink } from "../api/auth";  
+import { FaArrowLeft, FaEnvelope } from "react-icons/fa";
+import { sendPasswordResetLink } from "../api/auth"; 
+import '../css/login.css';
 
 const ForgotPasswordForm = () => {
-  const [email, setEmail] = useState("");
+  const [maildefault, setMaildefault] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     setError(""); 
     setMessage(""); 
+    setLoading(true);
 
     try {
-      const data = await sendPasswordResetLink(email);  
-      if (data.success) {
-        setMessage("Un lien de réinitialisation a été envoyé à votre email.");
+      const data = await sendPasswordResetLink(maildefault); 
+      setLoading(false); 
+      if (data.message) {
+        setMessage(data.message); 
       } else {
         setError(data.message || "Erreur d'envoi du lien de réinitialisation.");
       }
     } catch (error) {
+      setLoading(false);
       console.error("Erreur de réinitialisation du mot de passe :", error);
       setError("Une erreur est survenue. Veuillez réessayer.");
     }
@@ -39,9 +43,9 @@ const ForgotPasswordForm = () => {
             <input
               type="email"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="peer h-12 w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+              value={maildefault}
+              onChange={(e) => setMaildefault(e.target.value)}
+              className="maildefault peer h-12 w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
               placeholder="Entrez votre email"
             />
             <FaEnvelope className="absolute right-2 top-3 text-gray-500" />
@@ -50,11 +54,19 @@ const ForgotPasswordForm = () => {
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           {message && <p className="text-green-500 text-sm text-center">{message}</p>}
 
+        
+          {loading && (
+            <div className="flex justify-center">
+              <div className="spinner-border animate-spin border-4 border-t-4 border-indigo-600 w-8 h-8 rounded-full"></div>
+            </div>
+          )}
+
           <button
             type="submit"
             className="w-full py-2 bg-indigo-600 text-white text-lg font-medium uppercase rounded-full hover:bg-indigo-700 transition duration-300"
+            disabled={loading} 
           >
-            Envoyer le lien de réinitialisation
+            {loading ? "Envoi en cours..." : "Envoyer le lien de réinitialisation"}
           </button>
         </form>
 

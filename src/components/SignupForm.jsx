@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaLock, FaSync } from "react-icons/fa"; 
 import { registerUser } from '../api/auth'; 
 import '../css/login.css';
 
@@ -10,17 +10,22 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");  
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false); 
+  const [successMessage, setSuccessMessage] = useState(""); 
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccessMessage("");
   
     if (password !== passwordConfirmation) {
       setError("Les mots de passe ne correspondent pas.");
       return;
     }
-  
+
+    setIsLoading(true); 
+
     try {
       const response = await registerUser({
         name,
@@ -30,13 +35,17 @@ const SignupForm = () => {
       });
 
       if (response.success) {
-        alert("Utilisateur inscrit avec succès!");
-        navigate('/'); 
+        setSuccessMessage("Utilisateur inscrit avec succès!"); 
+        setTimeout(() => {
+          navigate('/login'); 
+        }, 2000);  
       } else {
         setError(response.message || "Erreur d'inscription");
       }
     } catch (error) {
       setError("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -90,9 +99,13 @@ const SignupForm = () => {
             placeholder="Confirmer le mot de passe"
           />
         </div>
+
         {error && <p className="text-red-500 text-sm">{error}</p>}
+{successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
+
+
         <button className="w-full py-2 bg-white text-indigo-600 text-lg font-bold uppercase rounded-full hover:bg-gray-200">
-          Inscription
+          {isLoading ? <FaSync className="animate-spin mx-auto" /> : "Inscription"} 
         </button>
       </form>
     </div>

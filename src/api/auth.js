@@ -27,25 +27,23 @@ export const loginUser = async (loginData) => {
 
 export const sendPasswordResetLink = async (email) => {
   try {
-    const response = await axios.post(`${apiUrl}/sendResetLink`, { email });
+    const response = await axios.post(`${apiUrl}/forgot-password`, { email });
     return response.data;
   } catch (error) {
-    console.error('Erreur lors de l\'envoi du lien de réinitialisation:', error);
+    console.error("Erreur lors de l'envoi du lien de réinitialisation:", error);
     throw error;
   }
 };
-
 
 export const resetPassword = async (resetData) => {
   try {
-    const response = await axios.post(`${apiUrl}/resetPassword`, resetData);
+    const response = await axios.post(`${apiUrl}/reset-password`, resetData);
     return response.data;
   } catch (error) {
-    console.error('Erreur lors de la réinitialisation du mot de passe:', error);
+    console.error("Erreur lors de la réinitialisation du mot de passe:", error);
     throw error;
   }
 };
-
 
 export const logoutUser = async () => {
   try {

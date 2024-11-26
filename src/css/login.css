@@ -1,13 +1,44 @@
 
 .auth-form input:-webkit-autofill,
 .login-form input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 50px #4F46E5 inset !important; /* Indigo-600 */
-  background-color: #4F46E5 !important; /* Indigo-600 pour le fond */
+  -webkit-box-shadow: 0 0 0 50px #4F46E5 inset !important; 
+background-color: transparent !important;
   -webkit-text-fill-color: white !important;
 }
 
 .auth-form input:-webkit-autofill:focus,
 .login-form input:-webkit-autofill:focus {
-  background-color: #9333EA !important; 
+  background-color: transparent !important;
   -webkit-text-fill-color: white !important;
 }
+
+.maildefault:-webkit-autofill {
+  height: 3rem;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: 2px solid #D1D5DB;
+  color: white !important;
+  placeholder-color: #6B7280 !important;
+  outline: none;
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: white !important;
+}
+
+.maildefault:-moz-autofill {
+  -webkit-text-fill-color: white !important;
+  background-color: transparent;
+  
+}
+
+.maildefault:-ms-input-placeholder {
+  height: 3rem;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: 2px solid #D1D5DB;
+  color: white !important;
+  placeholder-color: #6B7280 !important;
+  outline: none;
+  -webkit-text-fill-color: white !important;
+}
+
+
