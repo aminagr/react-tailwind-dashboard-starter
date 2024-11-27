@@ -79,3 +79,36 @@ export const fetchUserData = async (token) => {
     throw error;
   }
 };
+
+
+export const updateUserInfo = async (userData, token) => {
+  try {
+    const response = await axios.put(`${apiUrl}/user/update`, userData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour des informations:', error);
+    throw error;
+  }
+};
+
+export const changePassword = async (data, token) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}/user/change-password`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors du changement de mot de passe:', error);
+    throw new Error(error.response?.data?.message || 'Erreur lors du changement du mot de passe.');
+  }
+};
